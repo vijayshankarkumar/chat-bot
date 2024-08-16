@@ -1,0 +1,90 @@
+.message-list-container {
+    overflow-y: scroll;
+  }
+  
+  .message-list-container::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+  }
+
+  .bot-message-container {
+    display: flex;
+  }
+
+  .option-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .option {
+    border: solid 0.1rem;
+    border-radius: 13px;
+    color: purple;
+    cursor: pointer;
+    font-size: 15px;
+  }
+
+  .option-text {
+    padding: 6px;
+  }
+
+  .user-message-containter {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .message {
+    padding: 0.5rem;
+    margin-bottom: 3%;
+    max-width: 250px;
+  }
+  
+  .bot-message {
+    background-color: #d3d8f5;
+    border-radius: 0px 20px 20px 20px;
+  }
+  
+  .user-message {
+    background-color: #6077fa;
+    border-radius: 20px 20px 0px 20px;
+    color: white;
+    display: flex;
+  }
+
+  .edit-delete-container {
+    display: flex;
+    justify-content: end;
+    margin-top: -15px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+  }
+
+  .edit {
+    margin-right: 5px;
+    color: black;
+    border-width: 0px;
+    background-color: #b7c1fa;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    padding-right: 15px;
+  }
+
+  .edit :hover {
+    color: black;
+    cursor: pointer;
+  }
+
+  .delete {
+    color: black;
+    border-width: 0px;
+    background-color:  #b7c1fa;
+    border-radius: 45%;
+    height: 20px;
+    width: 20px;
+    padding-right: 15px;
+  }
+
+  .delete :hover{
+    color: rgb(252, 49, 49);
+    cursor: pointer;
+  }
