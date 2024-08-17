@@ -9,6 +9,9 @@ A user-friendly chat widget enabling seamless interaction with a chatbot. The wi
 
 - Edit Messages: Users can modify messages they’ve previously sent, allowing them to correct or update their input before the chatbot processes it further.
 
+![Screenshot 2024-08-17 213527](https://github.com/user-attachments/assets/dd17d7e7-9802-4c02-b227-55b486d1c1b0)
+
+
 ### Documentation
 **Project setup**
  - **Clone the Repository**:  ```git clone https://github.com/vijayshankarkumar/chat-bot.git```
