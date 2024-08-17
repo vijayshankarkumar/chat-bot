@@ -19,9 +19,9 @@ def add_message(chat_id: str, message: ChatBotRequest):
     return chatbot_service.add_message(chat_id, message)
 
 
-@router.post("/chatbot/edit-message/{chat_id}", response_model=ChatBotResponse)
-def edit_message(chat_id: str, message: ChatBotRequest):
-    return chatbot_service.edit_message(chat_id, message)
+@router.post("/chatbot/edit-message/{chat_id}/{message_id}", response_model=ChatBotResponse)
+def edit_message(chat_id: str, message_id: int, message: ChatBotRequest):
+    return chatbot_service.edit_message(chat_id, message_id, message)
 
 
 @router.post("/chatbot/delete-message/{chat_id}/{message_id}", response_model=ChatBotResponse)

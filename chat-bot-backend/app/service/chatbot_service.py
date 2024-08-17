@@ -42,9 +42,9 @@ class ChatBotService:
         return ChatBotResponse(chat=self.chat_id_to_chat_mapping[chat_id], 
                                messages=[msg for msg in self.chat_id_to_message_mapping[chat_id] if not msg.deleted])
     
-    def edit_message(self, chat_id: str, req_message: ChatBotRequest) -> ChatBotResponse:
+    def edit_message(self, chat_id: str, message_id, req_message: ChatBotRequest) -> ChatBotResponse:
         for message in self.chat_id_to_message_mapping[chat_id]:
-            if message.id == req_message.id:
+            if message.id == message_id:
                 message.content = req_message.content
                 message.updated_on = datetime.now()
                 message.edited = True

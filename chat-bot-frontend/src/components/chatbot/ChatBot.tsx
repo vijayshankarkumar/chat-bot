@@ -4,12 +4,13 @@ import { Message, MessageType } from "../../types/Message";
 import { ChatResponse, ChatBotResponse } from "../../types/ChatBotResponse";
 import "./ChatBot.css";
 import avatar from "../../assets/cs.webp"
-import { initiateChat, addMessage, deleteMessage } from '../../service/ChatBotService'
+import { initiateChat, addMessage, deleteMessage, editMessage } from '../../service/ChatBotService'
 
 const ChatBot: React.FC = () => {
     const [chatId, setChatId] = useState<string>("");
     const [messages, setMessages] = useState<Message[]>([]);
     const [userResponse, setUserResponse] = useState<string>("");
+    const [selectedMessageId, setSelectedMessageId] = useState<number>(0);
 
     const optionClick = (e: React.MouseEvent<HTMLElement>) => {
         let option = e.currentTarget.dataset.id;
@@ -32,7 +33,13 @@ const ChatBot: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         if (userResponse != "") {
             e.preventDefault();
-            const chatData = await addMessage(chatId, { 'content': userResponse, 'type': 1 }) as ChatBotResponse;
+            let chatData = null;
+            if (selectedMessageId == 0) {
+                chatData = await addMessage(chatId, { 'content': userResponse, 'type': 1 }) as ChatBotResponse;
+            }
+            else {
+                chatData = await editMessage(chatId, selectedMessageId, { 'content': userResponse, 'type': 1 }) as ChatBotResponse;
+            }
             const messageList = chatData.messages.map(message => ({
                 id: message.id,
                 content: message.content,
@@ -41,13 +48,25 @@ const ChatBot: React.FC = () => {
                 deleted: message.deleted,
             })) as Message[];
             setMessages(messageList);
+            setSelectedMessageId(0);
             setUserResponse("");
         }
     };
 
+    const editClick = async (e: React.MouseEvent<HTMLElement>) => {
+        e.preventDefault();
+        const id = e.currentTarget.dataset ? Number(e.currentTarget.dataset.id) : 0;
+        messages.forEach(message => {
+            if (message.id === id) {
+                setUserResponse(message.content);
+                setSelectedMessageId(id);
+            }
+        });
+    };
+
     const deleteClick = async (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        const id = e.currentTarget.dataset ? Number(e.currentTarget.dataset.id) : 0
+        const id = e.currentTarget.dataset ? Number(e.currentTarget.dataset.id) : 0;
         const chatData = await deleteMessage(chatId, id) as ChatBotResponse;
         const messageList = chatData.messages.map(message => ({
             id: message.id,
@@ -95,7 +114,7 @@ const ChatBot: React.FC = () => {
                 chatId={chatId}
                 messages={messages}
                 onOptionClick={optionClick}
-                onEditClick={deleteClick}
+                onEditClick={editClick}
                 onDeleteClick={deleteClick}
             />
             <form onSubmit={(e) => handleSubmit(e)} className="form-container">
