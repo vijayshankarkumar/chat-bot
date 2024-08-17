@@ -48,18 +48,20 @@ const Chat: React.FC<ChatProps> = ({ message, onOptionClick, onEditClick, onDele
                         </div>
                     </div>
                     <div className="edit-delete-container">
-                        <button className="edit"
-                            onClick={(e) => onEditClick(e)}
-                            data-id={message.id}
-                            key={message.id} >
-                            <i className="fa fa-edit"></i>
-                        </button>
-                        <button className="delete"
-                            onClick={(e) => onDeleteClick(e)}
-                            data-id={message.id}
-                            key={message.id}>
-                            <i className="fa fa-remove"></i>
-                        </button>
+                        <div className="edit-delete-combined">
+                            <button className="edit"
+                                onClick={(e) => onEditClick(e)}
+                                data-id={message.id}
+                                key={message.id} >
+                                <i className="fa fa-edit"></i>
+                            </button>
+                            <button className="delete"
+                                onClick={(e) => onDeleteClick(e)}
+                                data-id={message.id}
+                                key={message.id}>
+                                <i className="fa fa-remove"></i>
+                            </button>
+                        </div>
                     </div>
                 </>
             );

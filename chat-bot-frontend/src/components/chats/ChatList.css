@@ -53,7 +53,7 @@
   .edit-delete-container {
     display: flex;
     justify-content: end;
-    margin-top: -15px;
+    margin-top: -20px;
     margin-bottom: 10px;
     margin-right: 10px;
   }
@@ -62,29 +62,38 @@
     margin-right: 5px;
     color: black;
     border-width: 0px;
-    background-color: #b7c1fa;
     border-radius: 50%;
     height: 20px;
     width: 20px;
     padding-right: 15px;
+    background: #6077fa;
   }
 
   .edit :hover {
-    color: black;
+    color: rgb(0, 47, 18);
     cursor: pointer;
   }
 
   .delete {
     color: black;
     border-width: 0px;
-    background-color:  #b7c1fa;
     border-radius: 45%;
     height: 20px;
     width: 20px;
     padding-right: 15px;
+    background: #6077fa;
   }
 
   .delete :hover{
-    color: rgb(252, 49, 49);
+    color: rgb(184, 30, 30);
     cursor: pointer;
+  }
+
+  .edit-delete-combined {
+    background: #6077fa;
+    border-radius: 10px;
+  }
+
+  .edit-delete-combined :hover {
+    background: #ffffff;
   }

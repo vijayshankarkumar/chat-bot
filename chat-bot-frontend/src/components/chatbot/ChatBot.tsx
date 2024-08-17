@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Chats from "../chats/ChatList";
 import { Message, MessageType } from "../../types/Message";
-import { ChatResponse, ChatBotResponse } from "../../types/ChatBotResponse";
+import { ChatResponse, ChatBotResponse, MessageResponse } from "../../types/ChatBotResponse";
 import "./ChatBot.css";
 import avatar from "../../assets/cs.webp"
 import { initiateChat, addMessage, deleteMessage, editMessage } from '../../service/ChatBotService'
@@ -12,16 +12,11 @@ const ChatBot: React.FC = () => {
     const [userResponse, setUserResponse] = useState<string>("");
     const [selectedMessageId, setSelectedMessageId] = useState<number>(0);
 
-    const optionClick = (e: React.MouseEvent<HTMLElement>) => {
+    const optionClick = async (e: React.MouseEvent<HTMLElement>) => {
         let option = e.currentTarget.dataset.id;
         if (option) {
-            // setMessages([...messages, {
-            //     id: messageId,
-            //     content: option,
-            //     type: MessageType.User,
-            //     edited: false,
-            //     deleted: false,
-            // }]);
+            const chatData = await addMessage(chatId, { 'content': option, 'type': 1 }) as ChatBotResponse;
+            setMessages(processMessageList(chatData.messages));
         }
     };
 
@@ -40,14 +35,7 @@ const ChatBot: React.FC = () => {
             else {
                 chatData = await editMessage(chatId, selectedMessageId, { 'content': userResponse, 'type': 1 }) as ChatBotResponse;
             }
-            const messageList = chatData.messages.map(message => ({
-                id: message.id,
-                content: message.content,
-                type: message.type === 0 ? MessageType.Bot : MessageType.User,
-                edited: message.edited,
-                deleted: message.deleted,
-            })) as Message[];
-            setMessages(messageList);
+            setMessages(processMessageList(chatData.messages));
             setSelectedMessageId(0);
             setUserResponse("");
         }
@@ -68,36 +56,32 @@ const ChatBot: React.FC = () => {
         e.preventDefault();
         const id = e.currentTarget.dataset ? Number(e.currentTarget.dataset.id) : 0;
         const chatData = await deleteMessage(chatId, id) as ChatBotResponse;
-        const messageList = chatData.messages.map(message => ({
-            id: message.id,
-            content: message.content,
-            type: message.type === 0 ? MessageType.Bot : MessageType.User,
-            edited: message.edited,
-            deleted: message.deleted,
-        })) as Message[];
-        setMessages(messageList);;
+        setMessages(processMessageList(chatData.messages));
     };
 
     useEffect(() => {
         const startChat = async () => {
             try {
                 const chatData = await initiateChat() as ChatBotResponse;
-                console.log("Setting chatId: ", chatData.chat.chat_id);
                 setChatId(chatData.chat.chat_id);
-                const messageList = chatData.messages.map(message => ({
-                    id: message.id,
-                    content: message.content,
-                    type: message.type === 0 ? MessageType.Bot : MessageType.User,
-                    edited: message.edited,
-                    deleted: message.deleted,
-                })) as Message[];
-                setMessages(messageList);
+                setMessages(processMessageList(chatData.messages));
             } catch (error) {
                 throw error;
             }
         };
         startChat();
     }, []);
+
+    const processMessageList = (messageList: MessageResponse[]) : Message[] => {
+        return messageList.map(message => ({
+            id: message.id,
+            content: message.content,
+            type: message.type === 0 ? MessageType.Bot : MessageType.User,
+            edited: message.edited,
+            deleted: message.deleted,
+            options: message.type === 0 ? ['Create This Month Report', 'Call Lead'] : undefined,
+        })) as Message[];
+    };
 
     return (
         <div className="chat-container">
