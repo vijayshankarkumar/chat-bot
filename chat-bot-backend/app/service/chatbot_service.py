@@ -3,6 +3,7 @@ import uuid
 from datetime import datetime
 from app.models.chat_model import Chat
 from app.models.message_model import Message
+from app.models.chatbot_request_model import ChatBotRequest
 from app.models.chatbot_response_model import ChatBotResponse
 
 class ChatBotService:
@@ -14,6 +15,7 @@ class ChatBotService:
         chat_id = str(uuid.uuid4())
         message = Message(id=1, 
                           content="Hi Jane, Amazing how Mosey is simplifying state compliance for buiness across the world!",
+                          type=0,
                           edited=False,
                           deleted=False,
                           created_on=datetime.now(),
@@ -27,26 +29,27 @@ class ChatBotService:
         self.chat_id_to_message_mapping[chat_id].append(message)
         return ChatBotResponse(chat=chat, messages=self.chat_id_to_message_mapping[chat_id])
     
-    def add_message(self, chat_id: str, req_message:Message) -> ChatBotResponse:
+    def add_message(self, chat_id: str, req_message:ChatBotRequest) -> ChatBotResponse:
         message_id = self.chat_id_to_message_mapping[chat_id][-1].id + 1
         message = Message(id=message_id, 
                           content=req_message.content,
+                          type=req_message.type,
                           edited=False,
                           deleted=False,
                           created_on=datetime.now(),
                           updated_on=datetime.now())
         self.chat_id_to_message_mapping[chat_id].append(message)
         return ChatBotResponse(chat=self.chat_id_to_chat_mapping[chat_id], 
-                               messages=self.chat_id_to_message_mapping[chat_id])
+                               messages=[msg for msg in self.chat_id_to_message_mapping[chat_id] if not msg.deleted])
     
-    def edit_message(self, chat_id: str, req_message: Message) -> ChatBotResponse:
+    def edit_message(self, chat_id: str, req_message: ChatBotRequest) -> ChatBotResponse:
         for message in self.chat_id_to_message_mapping[chat_id]:
             if message.id == req_message.id:
                 message.content = req_message.content
                 message.updated_on = datetime.now()
                 message.edited = True
         return ChatBotResponse(chat=self.chat_id_to_chat_mapping[chat_id], 
-                               messages=self.chat_id_to_message_mapping[chat_id])
+                               messages=[msg for msg in self.chat_id_to_message_mapping[chat_id] if not msg.deleted])
     
     def delete_message(self, chat_id: str, message_id: int) -> ChatBotResponse:
         for message in self.chat_id_to_message_mapping[chat_id]:
@@ -54,4 +57,4 @@ class ChatBotService:
                 message.updated_on = datetime.now()
                 message.deleted = True
         return ChatBotResponse(chat=self.chat_id_to_chat_mapping[chat_id], 
-                               messages=self.chat_id_to_message_mapping[chat_id])
+                               messages=[msg for msg in self.chat_id_to_message_mapping[chat_id] if not msg.deleted])

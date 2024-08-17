@@ -4,6 +4,7 @@ from datetime import datetime
 class Message(BaseModel): 
     id: int
     content: str
+    type: int
     edited: bool
     deleted: bool
     created_on: datetime = Field(default_factory=datetime.now)

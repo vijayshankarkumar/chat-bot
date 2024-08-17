@@ -9,4 +9,5 @@ export type Message = {
     type: MessageType;
     options?: string[];
     edited: boolean;
+    deleted: boolean;
 }

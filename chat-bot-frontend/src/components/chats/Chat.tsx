@@ -7,9 +7,11 @@ import "./ChatList.css";
 interface ChatProps {
     message: Message;
     onOptionClick: (ev: React.MouseEvent<HTMLElement>) => void;
+    onEditClick: (ev: React.MouseEvent<HTMLElement>) => void;
+    onDeleteClick: (ev: React.MouseEvent<HTMLElement>) => void;
 }
 
-const Chat: React.FC<ChatProps> = ({ message, onOptionClick }) => {
+const Chat: React.FC<ChatProps> = ({ message, onOptionClick, onEditClick, onDeleteClick }) => {
     switch (message.type) {
         case MessageType.Bot:
             return (
@@ -40,20 +42,26 @@ const Chat: React.FC<ChatProps> = ({ message, onOptionClick }) => {
         case MessageType.User:
             return (
                 <>
-                <div className="user-message-containter">
-                    <div className="message user-message" key={message.id}>
-                        <div>{message.content}</div>
+                    <div className="user-message-containter">
+                        <div className="message user-message" key={message.id}>
+                            <div>{message.content}</div>
+                        </div>
                     </div>
-                </div>
-                <div className="edit-delete-container">
-                <button className="edit">
-                    <i className="fa fa-edit"></i>
-                </button>
-                <button className="delete">
-                    <i className="fa fa-remove"></i>
-                </button>
-            </div>
-            </>
+                    <div className="edit-delete-container">
+                        <button className="edit"
+                            onClick={(e) => onEditClick(e)}
+                            data-id={message.id}
+                            key={message.id} >
+                            <i className="fa fa-edit"></i>
+                        </button>
+                        <button className="delete"
+                            onClick={(e) => onDeleteClick(e)}
+                            data-id={message.id}
+                            key={message.id}>
+                            <i className="fa fa-remove"></i>
+                        </button>
+                    </div>
+                </>
             );
     }
 }
