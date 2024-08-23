@@ -48,6 +48,7 @@
     border-radius: 20px 20px 0px 20px;
     color: white;
     display: flex;
+    cursor: pointer;
   }
 
   .edit-delete-container {
@@ -66,7 +67,7 @@
     height: 20px;
     width: 20px;
     padding-right: 15px;
-    background: #6077fa;
+    background: #a5b1fa;
   }
 
   .edit :hover {
@@ -81,7 +82,7 @@
     height: 20px;
     width: 20px;
     padding-right: 15px;
-    background: #6077fa;
+    background: #a5b1fa;
   }
 
   .delete :hover{
@@ -90,10 +91,21 @@
   }
 
   .edit-delete-combined {
-    background: #6077fa;
+    background: #a5b1fa;
     border-radius: 10px;
   }
 
   .edit-delete-combined :hover {
     background: #ffffff;
+  }
+
+  .deleted-message {
+    color: #a41717;
+    font-style: italic;
+    font-weight: bold;
+  }
+
+  .edited {
+    color: #c5d6b5;
+    font-style: italic;
   }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ChatBotResponse, ChatResponse } from '../types/ChatBotResponse';
 
-const API_URL = 'http://localhost:8001/chatbot';
+const API_URL = 'http://localhost:8000/chatbot';
 
 const initiateChat = async () => {
     try {

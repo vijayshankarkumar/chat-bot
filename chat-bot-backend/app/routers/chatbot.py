@@ -1,7 +1,6 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 
-import json
 from app.service.chatbot_service import ChatBotService
 from app.models.chatbot_response_model import ChatBotResponse
 from app.models.chatbot_request_model import ChatBotRequest

@@ -11,6 +11,8 @@ const ChatBot: React.FC = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [userResponse, setUserResponse] = useState<string>("");
     const [selectedMessageId, setSelectedMessageId] = useState<number>(0);
+    const [isChatWidgetVisible, setIsChatWidgetVisible] = useState(true);
+
 
     const optionClick = async (e: React.MouseEvent<HTMLElement>) => {
         let option = e.currentTarget.dataset.id;
@@ -39,6 +41,10 @@ const ChatBot: React.FC = () => {
             setSelectedMessageId(0);
             setUserResponse("");
         }
+    };
+
+    const onCloseWidget = (e: React.MouseEvent<HTMLElement>) => {
+        setIsChatWidgetVisible(!isChatWidgetVisible);
     };
 
     const editClick = async (e: React.MouseEvent<HTMLElement>) => {
@@ -84,8 +90,11 @@ const ChatBot: React.FC = () => {
     };
 
     return (
+        <>
+        {isChatWidgetVisible ? (
         <div className="chat-container">
             <div className="bot-container">
+                <div className="close-widget" onClick={onCloseWidget} ><i className="fa fa-remove"></i></div>
                 <div className="bot-avatar">
                     <img src={avatar} alt="AI avatar" style={{ borderRadius: '50%', width: '40px', height: '40px' }}></img>
                 </div>
@@ -119,7 +128,13 @@ const ChatBot: React.FC = () => {
                     <i className="fa fa-paper-plane"></i>
                 </button>
             </form>
-        </div>
+        </div>) : <div className="chat-widget-container" onClick={onCloseWidget}>
+                    <div className="chat-widget">
+                    <img src={avatar} alt="AI avatar" style={{ borderRadius: '50%', width: '40px', height: '40px' }}></img>
+                    </div>
+                    <div className="widget-label">Chat with Ava!</div>
+                </div>}
+        </>
     );
 };
 

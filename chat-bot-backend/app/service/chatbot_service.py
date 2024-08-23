@@ -84,5 +84,5 @@ class ChatBotService:
                           updated_on=datetime.now())
                 self.chat_id_to_message_mapping[chat_id].append(message)
         return ChatBotResponse(chat=self.chat_id_to_chat_mapping[chat_id], 
-                               messages=[msg for msg in self.chat_id_to_message_mapping[chat_id] if not msg.deleted])
+                               messages=self.chat_id_to_message_mapping[chat_id])
     
