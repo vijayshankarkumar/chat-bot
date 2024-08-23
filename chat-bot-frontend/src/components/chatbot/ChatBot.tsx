@@ -11,7 +11,7 @@ const ChatBot: React.FC = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [userResponse, setUserResponse] = useState<string>("");
     const [selectedMessageId, setSelectedMessageId] = useState<number>(0);
-    const [isChatWidgetVisible, setIsChatWidgetVisible] = useState(true);
+    const [isChatWidgetVisible, setIsChatWidgetVisible] = useState(false);
 
 
     const optionClick = async (e: React.MouseEvent<HTMLElement>) => {
