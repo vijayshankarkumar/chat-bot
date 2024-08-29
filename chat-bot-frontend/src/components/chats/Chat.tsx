@@ -14,7 +14,8 @@ interface ChatProps {
 const Chat: React.FC<ChatProps> = ({ message, onOptionClick, onEditClick, onDeleteClick }) => {
     const [isEditDeleteVisible, setIsEditDeleteVisible] = useState(false);
 
-    const handleClick = () => {
+    // Show edit/delete menu upon clicking user message
+    const handleMenuClick = () => {
         setIsEditDeleteVisible(!isEditDeleteVisible);
     };
 
@@ -27,7 +28,7 @@ const Chat: React.FC<ChatProps> = ({ message, onOptionClick, onEditClick, onDele
                     </div>
                     <div className="message-option-container">
                         <div className="message bot-message" key={message.id}>
-                            {message.content}
+                            {message.id == -1 ? <div className="message-loader"></div> : message.content}
                         </div>
                         <div className="message option-container">
                             {message.options ? (
@@ -48,7 +49,7 @@ const Chat: React.FC<ChatProps> = ({ message, onOptionClick, onEditClick, onDele
         case MessageType.User:
             return (
                 <>
-                    <div className="user-message-containter" onClick={handleClick}>
+                    <div className="user-message-containter" onClick={handleMenuClick}>
                         <div className="message user-message" key={message.id}>
                             <div>{message.deleted ? <div className="deleted-message">This message was deleted </div> :
                             message.content}</div>
@@ -62,7 +63,7 @@ const Chat: React.FC<ChatProps> = ({ message, onOptionClick, onEditClick, onDele
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         onEditClick(e);
-                                        handleClick();
+                                        handleMenuClick();
                                     }}
                                     data-id={message.id}>
                                     <i className="fa fa-edit"></i>

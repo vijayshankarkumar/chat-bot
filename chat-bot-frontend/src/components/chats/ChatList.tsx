@@ -15,7 +15,7 @@ const Chats: React.FC<ChatListProps> = ({ messages, onOptionClick, onEditClick, 
   const dummyRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
 
-  // enable autoscroll after each message
+  // Enable autoscroll after each message
   useEffect(() => {
     if (dummyRef && dummyRef.current && bodyRef && bodyRef.current) {
       bodyRef.current.scrollTo({

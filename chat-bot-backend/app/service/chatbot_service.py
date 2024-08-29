@@ -1,5 +1,6 @@
 from typing import List, Dict
 import uuid
+from fastapi import HTTPException
 from datetime import datetime
 from app.models.chat_model import Chat
 from app.models.message_model import Message
@@ -74,9 +75,20 @@ class ChatBotService:
                           created_on=datetime.now(),
                           updated_on=datetime.now())
                 self.chat_id_to_message_mapping[chat_id].append(message)
-            if messages[-1].content == 'Create This Month Report':
+            elif messages[-1].content == 'Create This Month Report':
                 message = Message(id=messages[-1].id + 1, 
                           content='Okay, we will create this report and send you over email',
+                          type=0,
+                          edited=False,
+                          deleted=False,
+                          created_on=datetime.now(),
+                          updated_on=datetime.now())
+                self.chat_id_to_message_mapping[chat_id].append(message)
+            elif messages[-1].content == 'Random Message':
+                raise HTTPException(status_code=500, detail="This message can't be processed")
+            else:
+                message = Message(id=messages[-1].id + 1, 
+                          content='Hey, how can you i help you? You can choose an option to proceed.',
                           type=0,
                           edited=False,
                           deleted=False,
